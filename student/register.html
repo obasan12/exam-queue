@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration - University CBT Exam System</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
+        <div class="container">
+            <a href="../index.html" class="flex items-center text-blue-600 hover:text-blue-800 mb-6">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Home
+            </a>
+
+            <div class="card max-w-md mx-auto border-blue-100 shadow-md">
+                <div class="card-header text-center">
+                    <h2 class="text-2xl font-bold text-blue-900">Student Registration</h2>
+                    <p class="card-description">Register for your CBT exam session</p>
+                </div>
+                <div class="card-content">
+                    <div id="error-alert" class="alert alert-danger hidden">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        <span id="error-message"></span>
+                    </div>
+
+                    <div id="already-registered-alert" class="alert bg-amber-50 border-amber-100 text-amber-800 hidden">
+                        <i class="fas fa-exclamation-circle text-amber-800 mr-2"></i>
+                        <div>
+                            <h4 class="font-medium">Already Registered</h4>
+                            <p>You have already registered for the exam. Please check your email for details or contact the admin office.</p>
+                        </div>
+                    </div>
+
+                    <form id="registration-form" class="space-y-6">
+                        <div class="form-group">
+                            <label for="matricNumber" class="form-label">Matriculation Number</label>
+                            <input 
+                                type="text" 
+                                id="matricNumber" 
+                                name="matricNumber" 
+                                class="form-control border-blue-200" 
+                                placeholder="e.g., SCI/2023/001" 
+                                required
+                            >
+                            <p class="form-text">Enter your university matriculation number to auto-fetch your details</p>
+                            <p id="matric-error" class="form-error hidden"></p>
+                        </div>
+
+                        <div id="student-info" class="bg-blue-50 p-4 border border-blue-100 rounded-md hidden">
+                            <div class="flex">
+                                <i class="fas fa-check-circle text-blue-600 mt-1"></i>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-medium text-blue-800">Student Information</h3>
+                                    <div class="mt-2 text-sm text-blue-700 space-y-1">
+                                        <p><span class="font-medium">Name:</span> <span id="student-name"></span></p>
+                                        <p><span class="font-medium">Level:</span> <span id="student-level"></span></p>
+                                        <p><span class="font-medium">Department:</span> <span id="student-department"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-control border-blue-200" 
+                                placeholder="your.email@example.com" 
+                                required
+                            >
+                            <p class="form-text">Your exam details will be sent to this email address</p>
+                            <p id="email-error" class="form-error hidden"></p>
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            id="submit-btn" 
+                            class="btn btn-primary btn-block"
+                        >
+                            Register for Exam
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer text-center text-sm text-gray-500 border-t pt-4">
+                    <p>Need help? Contact the exam office at exam-support@university.edu</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registration-form');
+            const matricInput = document.getElementById('matricNumber');
+            const submitBtn = document.getElementById('submit-btn');
+            const errorAlert = document.getElementById('error-alert');
+            const errorMessage = document.getElementById('error-message');
+            const alreadyRegisteredAlert = document.getElementById('already-registered-alert');
+            const studentInfo = document.getElementById('student-info');
+            const studentName = document.getElementById('student-name');
+            const studentLevel = document.getElementById('student-level');
+            const studentDepartment = document.getElementById('student-department');
+            
+            // Mock student data (in a real app, this would come from an API)
+            const mockStudents = {
+                'SCI/2023/001': {
+                    fullName: 'John Doe',
+                    level: '100L',
+                    department: 'Computer Science'
+                },
+                'SCI/2023/002': {
+                    fullName: 'Jane Smith',
+                    level: '100L',
+                    department: 'Electrical Engineering'
+                },
+                'SCI/2023/003': {
+                    fullName: 'Robert Johnson',
+                    level: '200L',
+                    department: 'Mechanical Engineering'
+                }
+            };
+            
+            // Function to show toast notification
+            function showToast(title, message, type = 'success') {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <div>
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close">&times;</button>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                }, 5000);
+                
+                // Close button
+                toast.querySelector('.toast-close').addEventListener('click', () => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                });
+            }
+            
+            // Function to fetch student details
+            function fetchStudentDetails(matricNumber) {
+                // Reset UI
+                studentInfo.classList.add('hidden');
+                errorAlert.classList.add('hidden');
+                alreadyRegisteredAlert.classList.add('hidden');
+                
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    const student = mockStudents[matricNumber];
+                    
+                    if (student) {
+                        // Display student info
+                        studentName.textContent = student.fullName;
+                        studentLevel.textContent = student.level;
+                        studentDepartment.textContent = student.department;
+                        studentInfo.classList.remove('hidden');
+                        
+                        // Randomly simulate already registered student (for demo purposes)
+                        if (matricNumber === 'SCI/2023/001' && Math.random() > 0.7) {
+                            alreadyRegisteredAlert.classList.remove('hidden');
+                            submitBtn.disabled = true;
+                        } else {
+                            submitBtn.disabled = false;
+                        }
+                    } else {
+                        errorAlert.classList.remove('hidden');
+                        errorMessage.textContent = 'Student not found. Please check your matriculation number.';
+                    }
+                }, 1000);
+            }
+            
+            // Event listener for matric number input
+            matricInput.addEventListener('blur', function() {
+                if (this.value.length >= 6) {
+                    fetchStudentDetails(this.value);
+                }
+            });
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const matricNumber = matricInput.value;
+                const email = document.getElementById('email').value;
+                
+                // Validate inputs
+                if (!matricNumber || matricNumber.length < 6) {
+                    document.getElementById('matric-error').textContent = 'Please enter a valid matriculation number';
+                    document.getElementById('matric-error').classList.remove('hidden');
+                    return;
+                }
+                
+                if (!email || !email.includes('@')) {
+                    document.getElementById('email-error').textContent = 'Please enter a valid email address';
+                    document.getElementById('email-error').classList.remove('hidden');
+                    return;
+                }
+                
+                // Disable button and show loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+                
+                // Simulate API call with timeout
+                setTimeout(() => {
+                    // Store registration data in localStorage for demo purposes
+                    const examDetails = {
+                        matricNumber: matricNumber,
+                        email: email,
+                        fullName: mockStudents[matricNumber]?.fullName || 'John Doe',
+                        level: mockStudents[matricNumber]?.level || '100L',
+                        examTime: '11:00 AM',
+                        examCenter: 'ICT1',
+                        tokenId: `EX-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`,
+                    };
+                    
+                    localStorage.setItem('examRegistration', JSON.stringify(examDetails));
+                    
+                    // Show success message
+                    showToast('Registration Successful', 'Your exam details have been sent to your email.');
+                    
+                    // Redirect to confirmation page
+                    setTimeout(() => {
+                        window.location.href = 'confirmation.html';
+                    }, 1000);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

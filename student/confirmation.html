@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmation - University CBT Exam System</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12">
+        <div class="container">
+            <a href="../index.html" class="flex items-center text-blue-600 hover:text-blue-800 mb-6">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Home
+            </a>
+
+            <div class="card max-w-md mx-auto border-green-100 shadow-md">
+                <div class="card-header text-center">
+                    <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                        <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-green-800">Registration Successful</h2>
+                    <p class="card-description text-green-600">Your exam has been scheduled successfully</p>
+                </div>
+
+                <div class="card-content space-y-6">
+                    <div class="rounded-lg bg-white p-5 border border-gray-200 shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-user mr-2 text-blue-600"></i>
+                            Student Information
+                        </h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">Name:</div>
+                                <div class="font-medium text-gray-900" id="student-name"></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">Matric Number:</div>
+                                <div class="font-medium text-gray-900" id="student-matric"></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">Email:</div>
+                                <div class="font-medium text-gray-900" id="student-email"></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">Level:</div>
+                                <div class="font-medium text-gray-900" id="student-level"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="border-t border-gray-200">
+
+                    <div class="rounded-lg bg-white p-5 border border-gray-200 shadow-sm">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                            <i class="fas fa-calendar-alt mr-2 text-purple-600"></i>
+                            Exam Details
+                        </h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">Exam Date:</div>
+                                <div class="font-medium text-gray-900">May 15, 2025</div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">
+                                    <i class="fas fa-clock text-gray-400 mr-1"></i>
+                                    Exam Time:
+                                </div>
+                                <div class="font-medium text-gray-900" id="exam-time"></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">
+                                    <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i>
+                                    Exam Center:
+                                </div>
+                                <div class="font-medium text-gray-900" id="exam-center"></div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-32 flex-shrink-0 text-gray-500">
+                                    <i class="fas fa-hashtag text-gray-400 mr-1"></i>
+                                    Token ID:
+                                </div>
+                                <div class="font-medium text-blue-600" id="token-id"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-lg p-4 border border-blue-100 text-blue-800">
+                        <h4 class="font-medium flex items-center mb-2">
+                            <i class="fas fa-envelope mr-2"></i>
+                            Email Confirmation
+                        </h4>
+                        <p class="text-sm">
+                            A confirmation email has been sent to <span class="font-medium" id="email-sent"></span> with all
+                            your exam details.
+                        </p>
+                    </div>
+
+                    <div class="bg-amber-50 rounded-lg p-4 border border-amber-100 text-amber-800">
+                        <h4 class="font-medium mb-2">Important Instructions:</h4>
+                        <ul class="text-sm space-y-1 list-disc pl-5">
+                            <li>Please arrive 30 minutes before your scheduled time.</li>
+                            <li>Bring a valid ID card along with your exam token.</li>
+                            <li>Mobile phones and electronic devices are not allowed in the exam hall.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card-footer flex justify-center gap-4 pt-2">
+                    <a href="../index.html" class="btn btn-outline btn-outline-primary">Return to Home</a>
+                    <button class="btn btn-success" id="print-btn">Print Confirmation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get exam details from localStorage
+            const examDetails = JSON.parse(localStorage.getItem('examRegistration')) || {
+                matricNumber: 'SCI/2023/001',
+                fullName: 'John Doe',
+                email: 'john.doe@example.com',
+                level: '100L',
+                examTime: '11:00 AM',
+                examCenter: 'ICT1',
+                tokenId: 'EX-2025-12345',
+            };
+            
+            // Populate the confirmation page
+            document.getElementById('student-name').textContent = examDetails.fullName;
+            document.getElementById('student-matric').textContent = examDetails.matricNumber;
+            document.getElementById('student-email').textContent = examDetails.email;
+            document.getElementById('student-level').textContent = examDetails.level;
+            document.getElementById('exam-time').textContent = examDetails.examTime;
+            document.getElementById('exam-center').textContent = examDetails.examCenter;
+            document.getElementById('token-id').textContent = examDetails.tokenId;
+            document.getElementById('email-sent').textContent = examDetails.email;
+            
+            // Print functionality
+            document.getElementById('print-btn').addEventListener('click', function() {
+                window.print();
+            });
+        });
+    </script>
+</body>
+</html>

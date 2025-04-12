@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - University CBT Exam System</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Mobile menu toggle -->
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Overlay for mobile menu -->
+        <div class="overlay" id="overlay"></div>
+        
+        <!-- Sidebar -->
+        <div class="admin-sidebar" id="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <h1 class="text-xl font-bold text-blue-900">CBT Admin</h1>
+            </div>
+            <div class="admin-sidebar-nav">
+                <a href="#overview" class="admin-sidebar-link active" data-tab="overview">
+                    <i class="fas fa-th-large icon"></i>
+                    Dashboard
+                </a>
+                <a href="#students" class="admin-sidebar-link" data-tab="students">
+                    <i class="fas fa-users icon"></i>
+                    Students
+                </a>
+                <a href="#upload" class="admin-sidebar-link" data-tab="upload">
+                    <i class="fas fa-file-excel icon"></i>
+                    Upload Data
+                </a>
+                <a href="#queue" class="admin-sidebar-link" data-tab="queue">
+                    <i class="fas fa-desktop icon"></i>
+                    Queue Monitor
+                </a>
+                
+                <div class="admin-sidebar-divider"></div>
+                
+                <a href="#settings" class="admin-sidebar-link">
+                    <i class="fas fa-cog icon"></i>
+                    Settings
+                </a>
+                <a href="#help" class="admin-sidebar-link">
+                    <i class="fas fa-question-circle icon"></i>
+                    Help & Support
+                </a>
+                <a href="#" class="admin-sidebar-link text-red-600" id="logout-btn">
+                    <i class="fas fa-sign-out-alt icon"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main content -->
+        <div class="admin-content">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-3xl font-bold tracking-tight">Admin Dashboard</h2>
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-500">Admin</span>
+                    <button class="btn btn-outline btn-sm" id="logout-btn-top">Logout</button>
+                </div>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tabs-list">
+                    <button class="tabs-trigger active" data-tab="overview">Overview</button>
+                    <button class="tabs-trigger" data-tab="students">Students</button>
+                    <button class="tabs-trigger" data-tab="upload">Upload Data</button>
+                    <button class="tabs-trigger" data-tab="queue">Queue Monitor</button>
+                </div>
+                
+                <!-- Overview Tab -->
+                <div class="tabs-content active" id="overview">
+                    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        <div class="card">
+                            <div class="card-header flex items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium">Total Students</h3>
+                                <i class="fas fa-users text-gray-500"></i>
+                            </div>
+                            <div class="card-content">
+                                <div class="text-2xl font-bold">8</div>
+                                <p class="text-xs text-gray-500">4 100L, 4 200L</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header flex items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium">ICT1 Center</h3>
+                                <i class="fas fa-building text-gray-500"></i>
+                            </div>
+                            <div class="card-content">
+                                <div class="text-2xl font-bold">32/50</div>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" style="width: 64%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">64% Capacity Used</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header flex items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium">ICT2 Center</h3>
+                                <i class="fas fa-building text-gray-500"></i>
+                            </div>
+                            <div class="card-content">
+                                <div class="text-2xl font-bold">28/40</div>
+                                <div class="progress mt-2">
+                                    <div class="progress-bar" style="width: 70%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">70% Capacity Used</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header flex items-center justify-between pb-2">
+                                <h3 class="text-sm font-medium">Time Slots</h3>
+                                <i class="fas fa-clock text-gray-500"></i>
+                            </div>
+                            <div class="card-content space-y-3">
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span>9:00 AM:</span>
+                                        <span class="font-medium">22/30</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 73%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span>11:00 AM:</span>
+                                        <span class="font-medium">18/30</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-1">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span>1:00 PM:</span>
+                                        <span class="font-medium">20/30</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: 67%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid gap-4 md:grid-cols-2 mt-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Student Distribution</h3>
+                                <p class="card-description">Distribution by level and department</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="space-y-4">
+                                    <div>
+                                        <h4 class="text-sm font-medium mb-2">By Level</h4>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div class="flex flex-col space-y-1">
+                                                <div class="flex items-center justify-between text-sm">
+                                                    <span>100L</span>
+                                                    <span class="font-medium">4</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 50%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col space-y-1">
+                                                <div class="flex items-center justify-between text-sm">
+                                                    <span>200L</span>
+                                                    <span class="font-medium">4</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 50%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 class="text-sm font-medium mb-2">Top Departments</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex flex-col space-y-1">
+                                                <div class="flex items-center justify-between text-sm">
+                                                    <span>Computer Science</span>
+                                                    <span class="font-medium">2</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 25%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col space-y-1">
+                                                <div class="flex items-center justify-between text-sm">
+                                                    <span>Electrical Engineering</span>
+                                                    <span class="font-medium">2</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 25%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col space-y-1">
+                                                <div class="flex items-center justify-between text-sm">
+                                                    <span>Mechanical Engineering</span>
+                                                    <span class="font-medium">1</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar" style="width: 12.5%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Recent Activity</h3>
+                                <p class="card-description">Latest system activities</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="space-y-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
+                                            <i class="fas fa-users text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium">New Registration</p>
+                                            <p class="text-xs text-gray-500">John Doe (SCI/2023/001) registered for the exam</p>
+                                            <p class="text-xs text-gray-400 mt-1">10 minutes ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100">
+                                            <i class="fas fa-file-excel text-green-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium">Data Upload</p>
+                                            <p class="text-xs text-gray-500">Admin uploaded student data (50 records)</p>
+                                            <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-purple-100">
+                                            <i class="fas fa-building text-purple-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-medium">Center Update</p>
+                                            <p class="text-xs text-gray-500">ICT1 center capacity increased to 50</p>
+                                            <p class="text-xs text-gray-400 mt-1">3 hours ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Students Tab -->
+                <div class="tabs-content" id="students">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Scheduled Students</h3>
+                            <p class="card-description">View and manage all scheduled students for the CBT exam</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                                <div class="flex-1">
+                                    <div class="relative">
+                                        <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+                                        <input 
+                                            type="text" 
+                                            id="search-input" 
+                                            class="form-control pl-10" 
+                                            placeholder="Search by name, matric number, or department..."
+                                        >
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-2">
+                                    <div class="w-32">
+                                        <select id="center-filter" class="form-control">
+                                            <option value="all">All Centers</option>
+                                            <option value="ICT1">ICT1</option>
+                                            <option value="ICT2">ICT2</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="w-32">
+                                        <select id="time-filter" class="form-control">
+                                            <option value="all">All Times</option>
+                                            <option value="9:00 AM">9:00 AM</option>
+                                            <option value="11:00 AM">11:00 AM</option>
+                                            <option value="1:00 PM">1:00 PM</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="w-32">
+                                        <select id="level-filter" class="form-control">
+                                            <option value="all">All Levels</option>
+                                            <option value="100L">100L</option>
+                                            <option value="200L">200L</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <button class="btn btn-outline btn-icon">
+                                        <i class="fas fa-filter"></i>
+                                        <span class="sr-only">Filter</span>
+                                    </button>
+                                    
+                                    <button id="export-csv" class="btn btn-outline ml-auto">
+                                        <i class="fas fa-download mr-2"></i>
+                                        Export CSV
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="table-container">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Matric Number</th>
+                                            <th>Full Name</th>
+                                            <th>Level</th>
+                                            <th>Department</th>
+                                            <th>Exam Time</th>
+                                            <th>Center</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="students-table-body">
+                                        <!-- Table rows will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class="flex items-center justify-between mt-4">
+                                <div class="text-sm text-gray-500" id="students-count">
+                                    Showing 0 of 0 students
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button class="btn btn-outline btn-sm" disabled>
+                                        Previous
+                                    </button>
+                                    <button class="btn btn-outline btn-sm" disabled>
+                                        Next
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upload Tab -->
+                <div class="tabs-content" id="upload">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Upload Student Data</h3>
+                            <p class="card-description">Upload a CSV file containing student information</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-6">
+                                <div class="border-2 border-dashed border-gray-200 rounded-lg p-6 text-center">
+                                    <i class="fas fa-cloud-upload-alt text-gray-400 text-4xl mb-4"></i>
+                                    <h3 class="text-lg font-medium text-gray-900 mb-1">Upload Student Data</h3>
+                                    <p class="text-sm text-gray-500 mb-4">Drag and drop your CSV file here, or click to browse</p>
+                                    <input id="student-data" type="file" accept=".csv" class="hidden">
+                                    <label for="student-data">
+                                        <button type="button" class="btn btn-outline mr-2">
+                                            Browse Files
+                                        </button>
+                                    </label>
+                                    <p class="text-xs text-gray-400 mt-2">
+                                        Supported format: CSV with columns for Matric Number, Full Name, Level, and Department
+                                    </p>
+                                </div>
+                                
+                                <div id="upload-success" class="bg-green-50 p-4 border border-green-100 rounded-md hidden">
+                                    <div class="flex">
+                                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                        <div class="ml-3">
+                                            <h3 class="text-sm font-medium text-green-800">Upload successful</h3>
+                                            <div class="mt-2 text-sm text-green-700">
+                                                <p>Your student data has been uploaded successfully.</p>
+                                                <ul class="list-disc pl-5 mt-1 space-y-1">
+                                                    <li>50 student records processed</li>
+                                                    <li>0 duplicate records found</li>
+                                                    <li>0 records with errors</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h3 class="text-sm font-medium mb-2">CSV Format Example:</h3>
+                                    <div class="rounded-md bg-gray-50 p-4 font-mono text-sm overflow-x-auto">
+                                        <pre>Matric Number,Full Name,Level,Department
+SCI/2023/001,John Doe,100L,Computer Science
+SCI/2023/002,Jane Smith,100L,Electrical Engineering
+SCI/2023/003,Robert Johnson,200L,Mechanical Engineering</pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid gap-4 md:grid-cols-2">
+                                    <div class="card">
+                                        <div class="card-header pb-2">
+                                            <h3 class="text-sm font-medium">Previous Uploads</h3>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="space-y-2">
+                                                <div class="flex justify-between items-center text-sm">
+                                                    <span>students_data_2025.csv</span>
+                                                    <span class="text-gray-500">2 days ago</span>
+                                                </div>
+                                                <div class="flex justify-between items-center text-sm">
+                                                    <span>100L_students.csv</span>
+                                                    <span class="text-gray-500">1 week ago</span>
+                                                </div>
+                                                <div class="flex justify-between items-center text-sm">
+                                                    <span>200L_students.csv</span>
+                                                    <span class="text-gray-500">1 week ago</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card">
+                                        <div class="card-header pb-2">
+                                            <h3 class="text-sm font-medium">Data Management</h3>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="space-y-2">
+                                                <button class="btn btn-outline w-full justify-start text-left" size="sm">
+                                                    <i class="fas fa-sync-alt mr-2"></i>
+                                                    Refresh Student Data
+                                                </button>
+                                                <button class="btn btn-outline w-full justify-start text-left" size="sm">
+                                                    <i class="fas fa-chart-bar mr-2"></i>
+                                                    Generate Reports
+                                                </button>
+                                                <button class="btn btn-outline w-full justify-start text-left text-red-600" size="sm">
+                                                    <i class="fas fa-times-circle mr-2"></i>
+                                                    Clear All Data
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Queue Tab -->
+                <div class="tabs-content" id="queue">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Queue Monitoring System</h3>
+                            <p class="card-description">Real-time monitoring of student queues at exam centers</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div class="card">
+                                    <div class="card-header pb-2">
+                                        <h3 class="text-lg">ICT1 Center</h3>
+                                        <p class="card-description">Current queue status</p>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="space-y-4">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm font-medium">Current Session:</span>
+                                                <span class="badge badge-primary">9:00 AM</span>
+                                            </div>
+                                            
+                                            <div class="space-y-2">
+                                                <div class="flex justify-between text-sm">
+                                                    <span>Students Present:</span>
+                                                    <span class="font-medium">18/25</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" style="width: 72%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="space-y-2">
+                                                <div class="flex justify-between text-sm">
+                                                    <span>Students Absent:</span>
+                                                    <span class="font-medium">7/25</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-danger" style="width: 28%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="rounded-md border p-3 bg-gray-50">
+                                                <h4 class="text-sm font-medium mb-2">Next Student</h4>
+                                                <div class="flex justify-between text-sm">
+                                                    <span>SCI/2023/005</span>
+                                                    <span>Michael Wilson</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="pt-2 flex space-x-2">
+                                                <button class="btn btn-success flex-1">
+                                                    <i class="fas fa-check-circle mr-2"></i>
+                                                    Mark Arrived
+                                                </button>
+                                                <button class="btn btn-outline flex-1">
+                                                    <i class="fas fa-times-circle mr-2"></i>
+                                                    Mark Absent
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-header pb-2">
+                                        <h3 class="text-lg">ICT2 Center</h3>
+                                        <p class="card-description">Current queue status</p>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="space-y-4">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-sm font-medium">Current Session:</span>
+                                                <span class="badge badge-primary">9:00 AM</span>
+                                            </div>
+                                            
+                                            <div class="space-y-2">
+                                                <div class="flex justify-between text-sm">
+                                                    <span>Students Present:</span>
+                                                    <span class="font-medium">15/20</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-success" style="width: 75%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="space-y-2">
+                                                <div class="flex justify-between text-sm">
+                                                    <span>Students Absent:</span>
+                                                    <span class="font-medium">5/20</span>
+                                                </div>
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-danger" style="width: 25%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="rounded-md border p-3 bg-gray-50">
+                                                <h4 class="text-sm font-medium mb-2">Next Student</h4>
+                                                <div class="flex justify-between text-sm">
+                                                    <span>SCI/2023/007</span>
+                                                    <span>David Miller</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="pt-2 flex space-x-2">
+                                                <button class="btn btn-success flex-1">
+                                                    <i class="fas fa-check-circle mr-2"></i>
+                                                    Mark Arrived
+                                                </button>
+                                                <button class="btn btn-outline flex-1">
+                                                    <i class="fas fa-times-circle mr-2"></i>
+                                                    Mark Absent
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6">
+                                <div class="card">
+                                    <div class="card-header pb-2">
+                                        <h3 class="text-lg">Emergency Token Generator</h3>
+                                        <p class="card-description">Generate tokens for late students</p>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="grid gap-4 sm:grid-cols-3">
+                                            <div class="col-span-2">
+                                                <label for="emergency-matric" class="form-label">Matriculation Number</label>
+                                                <input id="emergency-matric" type="text" class="form-control" placeholder="Enter matric number">
+                                            </div>
+                                            <div>
+                                                <label for="emergency-center" class="form-label">Exam Center</label>
+                                                <select id="emergency-center" class="form-control">
+                                                    <option value="ICT1">ICT1</option>
+                                                    <option value="ICT2">ICT2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-span-3">
+                                                <button id="generate-token" class="btn btn-warning w-full">Generate Emergency Token</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-6">
+                                            <h4 class="text-sm font-medium mb-3">Recent Emergency Tokens</h4>
+                                            <div class="table-container">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Token ID</th>
+                                                            <th>Matric Number</th>
+                                                            <th>Center</th>
+                                                            <th>Generated</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="font-medium">EMERG-2025-12345</td>
+                                                            <td>SCI/2023/010</td>
+                                                            <td>ICT1</td>
+                                                            <td>10 mins ago</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="font-medium">EMERG-2025-12346</td>
+                                                            <td>SCI/2023/015</td>
+                                                            <td>ICT2</td>
+                                                            <td>25 mins ago</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toast-container"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in
+            const adminSession = localStorage.getItem('adminSession');
+            if (!adminSession) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const adminSidebar = document.getElementById('admin-sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                adminSidebar.classList.toggle('open');
+                overlay.classList.toggle('open');
+            });
+            
+            overlay.addEventListener('click', function() {
+                adminSidebar.classList.remove('open');
+                overlay.classList.remove('open');
+            });
+            
+            // Tabs functionality
+            const tabTriggers = document.querySelectorAll('.tabs-trigger');
+            const tabContents = document.querySelectorAll('.tabs-content');
+            const sidebarLinks = document.querySelectorAll('.admin-sidebar-link');
+            
+            function setActiveTab(tabId) {
+                // Update tab triggers
+                tabTriggers.forEach(trigger => {
+                    if (trigger.dataset.tab === tabId) {
+                        trigger.classList.add('active');
+                    } else {
+                        trigger.classList.remove('active');
+                    }
+                });
+                
+                // Update tab contents
+                tabContents.forEach(content => {
+                    if (content.id === tabId) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+                
+                // Update sidebar links
+                sidebarLinks.forEach(link => {
+                    if (link.dataset.tab === tabId) {
+                        link.classList.add('active');
+                    } else if (link.dataset.tab) {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+            
+            tabTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    setActiveTab(this.dataset.tab);
+                });
+            });
+            
+            sidebarLinks.forEach(link => {
+                if (link.dataset.tab) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        setActiveTab(this.dataset.tab);
+                        
+                        // Close mobile menu if open
+                        adminSidebar.classList.remove('open');
+                        overlay.classList.remove('open');
+                    });
+                }
+            });
+            
+            // Logout functionality
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutBtnTop = document.getElementById('logout-btn-top');
+            
+            function handleLogout() {
+                localStorage.removeItem('adminSession');
+                window.location.href = 'login.html';
+            }
+            
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                handleLogout();
+            });
+            
+            logoutBtnTop.addEventListener('click', handleLogout);
+            
+            // Function to show toast notification
+            function showToast(title, message, type = 'success') {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <div>
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close">&times;</button>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                }, 5000);
+                
+                // Close button
+                toast.querySelector('.toast-close').addEventListener('click', () => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                });
+            }
+            
+            // Mock student data
+            const mockStudents = [
+                {
+                    id: 1,
+                    matricNumber: "SCI/2023/001",
+                    fullName: "John Doe",
+                    level: "100L",
+                    department: "Computer Science",
+                    examTime: "9:00 AM",
+                    examCenter: "ICT1",
+                    status: "Scheduled"
+                },
+                {
+                    id: 2,
+                    matricNumber: "SCI/2023/002",
+                    fullName: "Jane Smith",
+                    level: "100L",
+                    department: "Electrical Engineering",
+                    examTime: "9:00 AM",
+                    examCenter: "ICT1",
+                    status: "Scheduled"
+                },
+                {
+                    id: 3,
+                    matricNumber: "SCI/2023/003",
+                    fullName: "Robert Johnson",
+                    level: "200L",
+                    department: "Mechanical Engineering",
+                    examTime: "11:00 AM",
+                    examCenter: "ICT2",
+                    status: "Scheduled"
+                },
+                {
+                    id: 4,
+                    matricNumber: "SCI/2023/004",
+                    fullName: "Emily Davis",
+                    level: "200L",
+                    department: "Physics",
+                    examTime: "11:00 AM",
+                    examCenter: "ICT2",
+                    status: "Scheduled"
+                },
+                {
+                    id: 5,
+                    matricNumber: "SCI/2023/005",
+                    fullName: "Michael Wilson",
+                    level: "100L",
+                    department: "Mathematics",
+                    examTime: "1:00 PM",
+                    examCenter: "ICT1",
+                    status: "Scheduled"
+                },
+                {
+                    id: 6,
+                    matricNumber: "SCI/2023/006",
+                    fullName: "Sarah Brown",
+                    level: "100L",
+                    department: "Chemistry",
+                    examTime: "1:00 PM",
+                    examCenter: "ICT1",
+                    status: "Scheduled"
+                },
+                {
+                    id: 7,
+                    matricNumber: "SCI/2023/007",
+                    fullName: "David Miller",
+                    level: "200L",
+                    department: "Biology",
+                    examTime: "9:00 AM",
+                    examCenter: "ICT2",
+                    status: "Scheduled"
+                },
+                {
+                    id: 8,
+                    matricNumber: "SCI/2023/008",
+                    fullName: "Jennifer Taylor",
+                    level: "200L",
+                    department: "Computer Engineering",
+                    examTime: "9:00 AM",
+                    examCenter: "ICT2",
+                    status: "Scheduled"
+                }
+            ];
+            
+            // Populate students table
+            function populateStudentsTable(students) {
+                const tableBody = document.getElementById('students-table-body');
+                tableBody.innerHTML = '';
+                
+                if (students.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td colspan="7" class="text-center py-4">No students found matching your filters.</td>
+                    `;
+                    tableBody.appendChild(row);
+                } else {
+                    students.forEach(student => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="font-medium">${student.matricNumber}</td>
+                            <td>${student.fullName}</td>
+                            <td>${student.level}</td>
+                            <td>${student.department}</td>
+                            <td>${student.examTime}</td>
+                            <td>${student.examCenter}</td>
+                            <td><span class="badge badge-outline badge-primary">${student.status}</span></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+                
+                // Update count
+                document.getElementById('students-count').textContent = `Showing ${students.length} of ${mockStudents.length} students`;
+            }
+            
+            // Initial population
+            populateStudentsTable(mockStudents);
+            
+            // Search and filter functionality
+            const searchInput = document.getElementById('search-input');
+            const centerFilter = document.getElementById('center-filter');
+            const timeFilter = document.getElementById('time-filter');
+            const levelFilter = document.getElementById('level-filter');
+            
+            function filterStudents() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const center = centerFilter.value;
+                const time = timeFilter.value;
+                const level = levelFilter.value;
+                
+                const filteredStudents = mockStudents.filter(student => {
+                    const matchesSearch = 
+                        student.fullName.toLowerCase().includes(searchTerm) ||
+                        student.matricNumber.toLowerCase().includes(searchTerm) ||
+                        student.department.toLowerCase().includes(searchTerm);
+                    
+                    const matchesCenter = center === 'all' || student.examCenter === center;
+                    const matchesTime = time === 'all' || student.examTime === time;
+                    const matchesLevel = level === 'all' || student.level === level;
+                    
+                    return matchesSearch && matchesCenter && matchesTime && matchesLevel;
+                });
+                
+                populateStudentsTable(filteredStudents);
+            }
+            
+            searchInput.addEventListener('input', filterStudents);
+            centerFilter.addEventListener('change', filterStudents);
+            timeFilter.addEventListener('change', filterStudents);
+            levelFilter.addEventListener('change', filterStudents);
+            
+            // Export CSV functionality
+            document.getElementById('export-csv').addEventListener('click', function() {
+                showToast('Export Successful', 'Student data has been exported to CSV.');
+            });
+            
+            // File upload functionality
+            const fileInput = document.getElementById('student-data');
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    const fileName = this.files[0].name;
+                    
+                    // Show success message
+                    document.getElementById('upload-success').classList.remove('hidden');
+                    
+                    // Show toast
+                    showToast('File Uploaded', `Successfully uploaded ${fileName}`);
+                }
+            });
+            
+            // Emergency token generation
+            document.getElementById('generate-token').addEventListener('click', function() {
+                const matricNumber = document.getElementById('emergency-matric').value;
+                const center = document.getElementById('emergency-center').value;
+                
+                if (!matricNumber) {
+                    showToast('Error', 'Please enter a matriculation number.', 'error');
+                    return;
+                }
+                
+                // Generate token
+                const tokenId = `EMERG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+                
+                showToast('Emergency Token Generated', `Token ${tokenId} has been generated for ${matricNumber}.`);
+                
+                // Clear input
+                document.getElementById('emergency-matric').value = '';
+            });
+        });
+    </script>
+</body>
+</html>

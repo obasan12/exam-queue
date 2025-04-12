@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Monitor - University CBT Exam System</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="min-h-screen bg-gray-50">
+        <header class="header">
+            <div class="container">
+                <div class="flex items-center">
+                    <a href="dashboard.html" class="text-blue-600 hover:text-blue-800 mr-4">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Queue Monitoring System</h1>
+                        <p class="text-gray-600">Real-time monitoring of student queues at exam centers</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="container py-8">
+            <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <select id="center-select" class="form-control w-48">
+                        <option value="ICT1">ICT1 Center</option>
+                        <option value="ICT2">ICT2 Center</option>
+                    </select>
+
+                    <select id="time-select" class="form-control w-48">
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                    </select>
+                </div>
+
+                <button id="refresh-queue" class="btn btn-outline">
+                    <i class="fas fa-sync-alt mr-2"></i>
+                    Refresh Queue
+                </button>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <div class="md:col-span-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <span id="current-center">ICT1</span> - <span id="current-time">9:00 AM</span> Queue
+                            </h3>
+                            <p class="card-description">Current queue status and student attendance</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-6">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="card">
+                                        <div class="card-content pt-6">
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-green-600">
+                                                    <span id="present-count">18</span>/<span id="total-count">25</span>
+                                                </div>
+                                                <p class="text-sm text-gray-500">Students Present</p>
+                                                <div class="progress h-2 mt-2">
+                                                    <div class="progress-bar bg-success" id="present-progress" style="width: 72%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-content pt-6">
+                                            <div class="text-center">
+                                                <div class="text-2xl font-bold text-red-600">
+                                                    <span id="absent-count">7</span>/<span id="total-count-2">25</span>
+                                                </div>
+                                                <p class="text-sm text-gray-500">Students Absent</p>
+                                                <div class="progress h-2 mt-2 bg-red-100">
+                                                    <div class="progress-bar bg-danger" id="absent-progress" style="width: 28%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="table-container">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Matric Number</th>
+                                                <th>Name</th>
+                                                <th>Status</th>
+                                                <th class="text-right">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="queue-table-body">
+                                            <!-- Table rows will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Emergency Token</h3>
+                            <p class="card-description">Generate tokens for late students</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-4">
+                                <div class="space-y-2">
+                                    <label for="emergency-matric" class="form-label">Matriculation Number</label>
+                                    <input
+                                        id="emergency-matric"
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Enter matric number"
+                                    >
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="emergency-center" class="form-label">Exam Center</label>
+                                    <select id="emergency-center" class="form-control">
+                                        <option value="ICT1">ICT1</option>
+                                        <option value="ICT2">ICT2</option>
+                                    </select>
+                                </div>
+
+                                <button id="generate-token" class="btn btn-warning btn-block">Generate Emergency Token</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Notifications</h3>
+                            <p class="card-description">System alerts and updates</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
+                                        <i class="fas fa-bell text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Queue Update</p>
+                                        <p class="text-xs text-gray-500">ICT1 9:00 AM session is 72% complete</p>
+                                        <p class="text-xs text-gray-400 mt-1">5 minutes ago</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-green-100">
+                                        <i class="fas fa-check-circle text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Student Marked Present</p>
+                                        <p class="text-xs text-gray-500">John Doe (SCI/2023/001) marked as present</p>
+                                        <p class="text-xs text-gray-400 mt-1">15 minutes ago</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-amber-100">
+                                        <i class="fas fa-bell text-amber-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-medium">Emergency Token</p>
+                                        <p class="text-xs text-gray-500">Emergency token generated for SCI/2023/010</p>
+                                        <p class="text-xs text-gray-400 mt-1">30 minutes ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if admin is logged in
+            const adminSession = localStorage.getItem('adminSession');
+            if (!adminSession) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Function to show toast notification
+            function showToast(title, message, type = 'success') {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <div>
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close">&times;</button>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                }, 5000);
+                
+                // Close button
+                toast.querySelector('.toast-close').addEventListener('click', () => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                });
+            }
+            
+            // Mock queue data
+            const queueData = {
+                'ICT1': {
+                    '9:00 AM': {
+                        total: 25,
+                        present: 18,
+                        absent: 7,
+                        queue: [
+                            { matricNumber: 'SCI/2023/001', name: 'John Doe', status: 'Present' },
+                            { matricNumber: 'SCI/2023/002', name: 'Jane Smith', status: 'Present' },
+                            { matricNumber: 'SCI/2023/005', name: 'Michael Wilson', status: 'Waiting' },
+                            { matricNumber: 'SCI/2023/006', name: 'Sarah Brown', status: 'Waiting' }
+                        ]
+                    },
+                    '11:00 AM': {
+                        total: 20,
+                        present: 0,
+                        absent: 0,
+                        queue: [
+                            { matricNumber: 'SCI/2023/009', name: 'Thomas Anderson', status: 'Waiting' },
+                            { matricNumber: 'SCI/2023/010', name: 'Emily Johnson', status: 'Waiting' },
+                            { matricNumber: 'SCI/2023/011', name: 'James Williams', status: 'Waiting' }
+                        ]
+                    },
+                    '1:00 PM': {
+                        total: 15,
+                        present: 0,
+                        absent: 0,
+                        queue: [
+                            { matricNumber: 'SCI/2023/013', name: 'Olivia Davis', status: 'Waiting' },
+                            { matricNumber: 'SCI/2023/014', name: 'William Miller', status: 'Waiting' }
+                        ]
+                    }
+                },
+                'ICT2': {
+                    '9:00 AM': {
+                        total: 20,
+                        present: 15,
+                        absent: 5,
+                        queue: [
+                            { matricNumber: 'SCI/2023/003', name: 'Robert Johnson', status: 'Present' },
+                            { matricNumber: 'SCI/2023/004', name: 'Emily Davis', status: 'Present' },
+                            { matricNumber: 'SCI/2023/007', name: 'David Miller', status: 'Waiting' },
+                            { matricNumber: 'SCI/2023/008', name: 'Jennifer Taylor', status: 'Waiting' }
+                        ]
+                    },
+                    '11:00 AM': {
+                        total: 18,
+                        present: 0,
+                        absent: 0,
+                        queue: [
+                            { matricNumber: 'SCI/2023/015', name: 'Daniel Jones', status: 'Waiting' },
+                            { matricNumber: 'SCI/2023/016', name: 'Sophia Martinez', status: 'Waiting' }
+                        ]
+                    },
+                    '1:00 PM': {
+                        total: 12,
+                        present: 0,
+                        absent: 0,
+                        queue: [
+                            { matricNumber: 'SCI/2023/017', name: 'Alexander Brown', status: 'Waiting' },
+                            { matricNumber: 'SCI/2023/018', name: 'Isabella Wilson', status: 'Waiting' }
+                        ]
+                    }
+                }
+            };
+            
+            // Initialize variables
+            let selectedCenter = 'ICT1';
+            let selectedTime = '9:00 AM';
+            
+            // Update queue display
+            function updateQueueDisplay() {
+                const centerData = queueData[selectedCenter];
+                const timeData = centerData[selectedTime];
+                
+                // Update header
+                document.getElementById('current-center').textContent = selectedCenter;
+                document.getElementById('current-time').textContent = selectedTime;
+                
+                // Update counts
+                document.getElementById('present-count').textContent = timeData.present;
+                document.getElementById('total-count').textContent = timeData.total;
+                document.getElementById('absent-count').textContent = timeData.absent;
+                document.getElementById('total-count-2').textContent = timeData.total;
+                
+                // Update progress bars
+                const presentPercentage = timeData.total > 0 ? (timeData.present / timeData.total) * 100 : 0;
+                const absentPercentage = timeData.total > 0 ? (timeData.absent / timeData.total) * 100 : 0;
+                
+                document.getElementById('present-progress').style.width = `${presentPercentage}%`;
+                document.getElementById('absent-progress').style.width = `${absentPercentage}%`;
+                
+                // Update queue table
+                const tableBody = document.getElementById('queue-table-body');
+                tableBody.innerHTML = '';
+                
+                if (timeData.queue.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td colspan="4" class="text-center py-4">No students in queue for this session.</td>
+                    `;
+                    tableBody.appendChild(row);
+                } else {
+                    timeData.queue.forEach(student => {
+                        const row = document.createElement('tr');
+                        
+                        let statusBadge = '';
+                        if (student.status === 'Present') {
+                            statusBadge = '<span class="badge badge-success">Present</span>';
+                        } else if (student.status === 'Absent') {
+                            statusBadge = '<span class="badge badge-outline badge-danger">Absent</span>';
+                        } else {
+                            statusBadge = '<span class="badge badge-outline">Waiting</span>';
+                        }
+                        
+                        let actions = '';
+                        if (student.status === 'Waiting') {
+                            actions = `
+                                <div class="flex justify-end gap-2">
+                                    <button class="btn btn-sm btn-outline btn-success mark-present" data-matric="${student.matricNumber}">
+                                        <i class="fas fa-check-circle mr-1"></i> Present
+                                    </button>
+                                    <button class="btn btn-sm btn-outline btn-danger mark-absent" data-matric="${student.matricNumber}">
+                                        <i class="fas fa-times-circle mr-1"></i> Absent
+                                    </button>
+                                </div>
+                            `;
+                        }
+                        
+                        row.innerHTML = `
+                            <td class="font-medium">${student.matricNumber}</td>
+                            <td>${student.name}</td>
+                            <td>${statusBadge}</td>
+                            <td class="text-right">${actions}</td>
+                        `;
+                        
+                        tableBody.appendChild(row);
+                    });
+                }
+                
+                // Add event listeners for mark present/absent buttons
+                document.querySelectorAll('.mark-present').forEach(button => {
+                    button.addEventListener('click', function() {
+                        markStudentStatus(this.dataset.matric, 'Present');
+                    });
+                });
+                
+                document.querySelectorAll('.mark-absent').forEach(button => {
+                    button.addEventListener('click', function() {
+                        markStudentStatus(this.dataset.matric, 'Absent');
+                    });
+                });
+            }
+            
+            // Mark student status
+            function markStudentStatus(matricNumber, status) {
+                const timeData = queueData[selectedCenter][selectedTime];
+                const student = timeData.queue.find(s => s.matricNumber === matricNumber);
+                
+                if (student) {
+                    student.status = status;
+                    
+                    if (status === 'Present') {
+                        timeData.present += 1;
+                    } else {
+                        timeData.absent += 1;
+                    }
+                    
+                    updateQueueDisplay();
+                    showToast(`Student Marked ${status}`, `${student.name} has been marked as ${status.toLowerCase()}.`);
+                }
+            }
+            
+            // Initialize display
+            updateQueueDisplay();
+            
+            // Event listeners for center and time selects
+            document.getElementById('center-select').addEventListener('change', function() {
+                selectedCenter = this.value;
+                updateQueueDisplay();
+            });
+            
+            document.getElementById('time-select').addEventListener('change', function() {
+                selectedTime = this.value;
+                updateQueueDisplay();
+            });
+            
+            // Refresh queue
+            document.getElementById('refresh-queue').addEventListener('click', function() {
+                showToast('Queue Refreshed', 'Queue data has been updated.');
+                updateQueueDisplay();
+            });
+            
+            // Generate emergency token
+            document.getElementById('generate-token').addEventListener('click', function() {
+                const matricNumber = document.getElementById('emergency-matric').value;
+                const center = document.getElementById('emergency-center').value;
+                
+                if (!matricNumber) {
+                    showToast('Error', 'Please enter a matriculation number.', 'error');
+                    return;
+                }
+                
+                // Generate token
+                const tokenId = `EMERG-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`;
+                
+                showToast('Emergency Token Generated', `Token ${tokenId} has been generated for ${matricNumber}.`);
+                
+                // Clear input
+                document.getElementById('emergency-matric').value = '';
+            });
+        });
+    </script>
+</body>
+</html>

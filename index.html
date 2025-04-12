@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University CBT Exam System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+        <header class="header">
+            <div class="container flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-blue-900">University CBT Exam System</h1>
+                    <p class="text-blue-600">Faculty of Science and Engineering</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="student/index.html" class="btn btn-outline">Student Portal</a>
+                    <a href="admin/login.html" class="btn btn-outline">Admin Portal</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="container py-12">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Computer-Based Testing Management System</h2>
+                <p class="text-xl text-gray-600">
+                    Streamlined exam scheduling and queue management for 100L & 200L Science and Engineering students
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="card border-blue-100 shadow-md">
+                    <div class="card-header">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-2">
+                            <i class="fas fa-book-open text-blue-600"></i>
+                        </div>
+                        <h3 class="card-title">Student Registration</h3>
+                        <p class="card-description">Register for your CBT exam session</p>
+                    </div>
+                    <div class="card-content">
+                        <p class="text-gray-600">
+                            Enter your matriculation number and email to get your exam schedule, center allocation, and unique
+                            token.
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="student/register.html" class="btn btn-primary btn-block">Register Now</a>
+                    </div>
+                </div>
+
+                <div class="card border-purple-100 shadow-md">
+                    <div class="card-header">
+                        <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-2">
+                            <i class="fas fa-th-large text-purple-600"></i>
+                        </div>
+                        <h3 class="card-title">Admin Dashboard</h3>
+                        <p class="card-description">Manage exam schedules and students</p>
+                    </div>
+                    <div class="card-content">
+                        <p class="text-gray-600">
+                            Upload student data, view scheduled students, manage exam centers, and export reports.
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="admin/login.html" class="btn btn-outline btn-block btn-outline-secondary">Admin Login</a>
+                    </div>
+                </div>
+
+                <div class="card border-green-100 shadow-md">
+                    <div class="card-header">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-2">
+                            <i class="fas fa-users text-green-600"></i>
+                        </div>
+                        <h3 class="card-title">Queue Monitor</h3>
+                        <p class="card-description">Real-time exam center monitoring</p>
+                    </div>
+                    <div class="card-content">
+                        <p class="text-gray-600">
+                            Track student attendance, view real-time queue status, and manage emergency cases.
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="admin/queue.html" class="btn btn-outline btn-block btn-outline-success">View Queue</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 max-w-3xl mx-auto bg-blue-50 rounded-lg p-6 border border-blue-100">
+                <h3 class="text-lg font-semibold text-blue-800 mb-2">System Features</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-gray-700">
+                    <li class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        Automated exam scheduling
+                    </li>
+                    <li class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        Email confirmations
+                    </li>
+                    <li class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        Center capacity management
+                    </li>
+                    <li class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        Real-time queue monitoring
+                    </li>
+                    <li class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        Student data management
+                    </li>
+                    <li class="flex items-center">
+                        <div class="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        Emergency token generation
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container text-center text-gray-600">
+                <p>© <span id="current-year"></span> University Faculty of Science and Engineering</p>
+                <p class="text-sm mt-1">Computer-Based Testing Exam Management System</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

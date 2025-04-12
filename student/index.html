@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - University CBT Exam System</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+        <header class="header">
+            <div class="container flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-blue-900">Student Portal</h1>
+                    <p class="text-blue-600">Faculty of Science and Engineering</p>
+                </div>
+                <a href="../index.html" class="btn btn-outline">Back to Home</a>
+            </div>
+        </header>
+
+        <main class="container py-12">
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card border-blue-100 shadow-md">
+                        <div class="card-header">
+                            <h3 class="card-title">Register for Exam</h3>
+                            <p class="card-description">Schedule your CBT exam session</p>
+                        </div>
+                        <div class="card-content">
+                            <p class="text-gray-600">
+                                Enter your matriculation number and email to get your exam schedule, center allocation, and unique
+                                token.
+                            </p>
+                            <ul class="mt-4 space-y-2">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-sm">Automatic scheduling based on your level and department</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-sm">Email confirmation with all exam details</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                    <span class="text-sm">Unique token ID for exam day verification</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <a href="register.html" class="btn btn-primary btn-block">
+                                Register Now
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card border-purple-100 shadow-md">
+                        <div class="card-header">
+                            <h3 class="card-title">Exam Information</h3>
+                            <p class="card-description">Important details about your CBT exam</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-4">
+                                <div class="rounded-md bg-purple-50 p-4 border border-purple-100">
+                                    <h4 class="font-medium text-purple-800 mb-2">Exam Centers</h4>
+                                    <p class="text-sm text-purple-700">
+                                        ICT1 and ICT2 centers are located in the Faculty of Science and Engineering building.
+                                    </p>
+                                </div>
+
+                                <div class="rounded-md bg-blue-50 p-4 border border-blue-100">
+                                    <h4 class="font-medium text-blue-800 mb-2">Exam Schedule</h4>
+                                    <p class="text-sm text-blue-700">
+                                        Exams are scheduled in three sessions: 9:00 AM, 11:00 AM, and 1:00 PM.
+                                    </p>
+                                </div>
+
+                                <div class="rounded-md bg-amber-50 p-4 border border-amber-100">
+                                    <h4 class="font-medium text-amber-800 mb-2">What to Bring</h4>
+                                    <ul class="text-sm text-amber-700 space-y-1 list-disc pl-5">
+                                        <li>University ID card</li>
+                                        <li>Exam token (printed or digital)</li>
+                                        <li>Pen and pencil</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-outline btn-block btn-outline-secondary">
+                                <i class="fas fa-question-circle mr-2"></i>
+                                Exam FAQ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 bg-white rounded-lg p-6 border shadow-sm">
+                    <h2 class="text-xl font-bold text-gray-900 mb-4">Already Registered?</h2>
+                    <p class="text-gray-600 mb-6">
+                        If you've already registered for the exam, you can view your exam details by entering your matriculation
+                        number below.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input
+                            type="text"
+                            id="check-matric"
+                            placeholder="Enter your matriculation number"
+                            class="form-control"
+                        >
+                        <button id="check-registration" class="btn btn-success sm:w-auto">View Exam Details</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container text-center text-gray-600">
+                <p>© <span id="current-year"></span> University Faculty of Science and Engineering</p>
+                <p class="text-sm mt-1">Computer-Based Testing Exam Management System</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Function to show toast notification
+            function showToast(title, message, type = 'success') {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.innerHTML = `
+                    <div>
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close">&times;</button>
+                `;
+                
+                toastContainer.appendChild(toast);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                }, 5000);
+                
+                // Close button
+                toast.querySelector('.toast-close').addEventListener('click', () => {
+                    toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                    setTimeout(() => {
+                        toastContainer.removeChild(toast);
+                    }, 300);
+                });
+            }
+            
+            // Check registration functionality
+            document.getElementById('check-registration').addEventListener('click', function() {
+                const matricNumber = document.getElementById('check-matric').value;
+                
+                if (!matricNumber) {
+                    showToast('Error', 'Please enter your matriculation number.', 'error');
+                    return;
+                }
+                
+                // Check if there's a registration in localStorage (for demo purposes)
+                const storedRegistration = localStorage.getItem('examRegistration');
+                
+                if (storedRegistration) {
+                    const registration = JSON.parse(storedRegistration);
+                    
+                    if (registration.matricNumber === matricNumber) {
+                        // Redirect to confirmation page
+                        window.location.href = 'confirmation.html';
+                        return;
+                    }
+                }
+                
+                // If no registration found
+                showToast('Not Found', 'No registration found for this matriculation number.', 'error');
+            });
+        });
+    </script>
+</body>
+</html>
